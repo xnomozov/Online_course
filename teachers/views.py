@@ -12,3 +12,13 @@ class TeacherListView(TemplateView):
         context = super().get_context_data(**kwargs)
         context['teachers'] = Teacher.objects.all()
         return context
+
+
+class TeacherDetailView(TemplateView):
+    template_name = 'teachers/teachers-detail.html'
+
+    def get_context_data(self, **kwargs):
+        teacher = Teacher.objects.get(pk=self.kwargs['pk'])
+        context = super().get_context_data(**kwargs)
+        context['teacher'] = teacher
+        return context

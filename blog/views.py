@@ -11,3 +11,7 @@ class BlogPostListView(TemplateView):
         context = super().get_context_data(**kwargs)
         context['blogs'] = Blog.objects.all()
         return context
+
+
+class SingleTemplateView(TemplateView):
+    template_name = 'blog/single.html'
