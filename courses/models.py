@@ -50,7 +50,7 @@ class Video(models.Model):
     video = models.FileField(upload_to='courses/')
 
 
-class Comment(models.Model):
+class CourseComment(models.Model):
     class RatingChoices(models.TextChoices):
         Zero = '0'
         One = '1'
@@ -65,8 +65,9 @@ class Comment(models.Model):
     is_published = models.BooleanField(default=False)
     rating = models.CharField(max_length=100, choices=RatingChoices.choices, default=RatingChoices.Zero.value)
     course_id = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='comments')
-    blog_id = models.ForeignKey(Blog, on_delete=models.CASCADE, related_name='comments')
-    author_id = models.ForeignKey(Author, on_delete=models.CASCADE, related_name='comments')
+
+
+
 
 
 class User(AbstractBaseUser, PermissionsMixin):

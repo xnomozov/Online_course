@@ -83,20 +83,22 @@
                 <h1>Explore Top Subjects</h1>
             </div>
             <div class="row">
-            {% for category in categories %}
-            <div class="col-lg-3 col-md-6 mb-4">
-                <div class="cat-item position-relative overflow-hidden rounded mb-2">
-                    <img class="img-fluid" src="{{ category.image.url }}" alt="{{ category.title }}" style="width: 100%; height: 200px; object-fit: cover;">
-                    <a class="cat-overlay text-white text-decoration-none" href="{% url 'category_courses' category.id %}">
-                        <div class="overlay-content">
-                            <h4 class="text-white font-weight-medium">{{ category.title }}</h4>
-                            <span>{{ category.course_count }} Courses</span>
+                {% for category in categories %}
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <div class="cat-item position-relative overflow-hidden rounded mb-2">
+                            <img class="img-fluid" src="{{ category.image.url }}" alt="{{ category.title }}"
+                                 style="width: 100%; height: 200px; object-fit: cover;">
+                            <a class="cat-overlay text-white text-decoration-none"
+                               href="{% url 'category_courses' category.id %}">
+                                <div class="overlay-content">
+                                    <h4 class="text-white font-weight-medium">{{ category.title }}</h4>
+                                    <span>{{ category.course_count }} Courses</span>
+                                </div>
+                            </a>
                         </div>
-                    </a>
-                </div>
+                    </div>
+                {% endfor %}
             </div>
-            {% endfor %}
-        </div>
         </div>
     </div>
     <!-- Category Start -->
@@ -109,32 +111,40 @@
                 <h5 class="text-primary text-uppercase mb-3" style="letter-spacing: 5px;">Courses</h5>
                 <h1>Our Popular Courses</h1>
             </div>
-           <div class="row">
-            {% for course in courses %}
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="rounded overflow-hidden mb-2">
-                    <img class="img-fluid" src="{{ course.image.url }}" alt="{{ course.title }}" style="width: 100%; height: 200px; object-fit: cover;">
-                    <div class="bg-secondary p-4">
-                        <div class="d-flex justify-content-between mb-3">
-                            <small class="m-0"><i class="fa fa-users text-primary mr-2"></i>{{ course.number_of_students }}</small>
-                            <small class="m-0"><i class="far fa-clock text-primary mr-2"></i>{{ course.duration_of_video }}</small>
-                        </div>
-                        <a class="h5 text-dark" href="{% url 'course_detail' course.id %}">{{ course.title }}</a>
-                        <div class="border-top mt-4 pt-4">
-                            <div class="d-flex justify-content-between">
-                                <h6 class="m-0"><i class="fa fa-star text-primary mr-2"></i>{{ course.rating }}<small>(250)</small></h6>
-                                <h5 class="m-0">{{ course.price }}</h5>
+            <div class="row">
+                {% for course in courses %}
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="rounded overflow-hidden mb-2">
+                            <img class="img-fluid" src="{{ course.image.url }}" alt="{{ course.title }}"
+                                 style="width: 100%; height: 200px; object-fit: cover;">
+                            <div class="bg-secondary p-4">
+                                <div class="d-flex justify-content-between mb-3">
+                                    <small class="m-0"><i
+                                            class="fa fa-users text-primary mr-2"></i>{{ course.number_of_students }}
+                                    </small>
+                                    <small class="m-0"><i
+                                            class="far fa-clock text-primary mr-2"></i>{{ course.duration_of_video }}
+                                    </small>
+                                </div>
+                                <a class="h5 text-dark"
+                                   href="{% url 'course_detail' course.id %}">{{ course.title }}</a>
+                                <div class="border-top mt-4 pt-4">
+                                    <div class="d-flex justify-content-between">
+                                        <h6 class="m-0"><i
+                                                class="fa fa-star text-primary mr-2"></i>{{ course.rating }}<small>(250)</small>
+                                        </h6>
+                                        <h5 class="m-0">{{ course.price }}</h5>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                {% empty %}
+                    <div class="col-12">
+                        <p class="text-center">No courses available at the moment. Please check back later.</p>
+                    </div>
+                {% endfor %}
             </div>
-            {% empty %}
-            <div class="col-12">
-                <p class="text-center">No courses available at the moment. Please check back later.</p>
-            </div>
-            {% endfor %}
-        </div>
         </div>
     </div>
     <!-- Courses End -->
@@ -206,38 +216,27 @@
                 <h1>Meet Our Teachers</h1>
             </div>
             <div class="row">
-                 {% for teacher in teachers %}
+                {% for teacher in teachers %}
                     <div class="col-md-6 col-lg-3 text-center team mb-4">
-                        <div class="team-item rounded overflow-hidden mb-2">
-                            <div class="team-img position-relative">
-                                <!-- Display Image -->
-                                <div class="team-img position-relative">
-                                    <!-- Display Image -->
-                                    <img class="img-fluid" src="{{ teacher.image.url }}" alt="{{ teacher.full_name }}">
-                                    <!-- Debugging line to check the image URL -->
-
-                                </div>
-                                <a class="btn btn-outline-light btn-square mx-1" href="#" aria-label="Twitter">
-                                    <i class="fab fa-twitter"></i>
-                                </a>
-                                <a class="btn btn-outline-light btn-square mx-1" href="#" aria-label="Facebook">
-                                    <i class="fab fa-facebook-f"></i>
-                                </a>
-                                <a class="btn btn-outline-light btn-square mx-1" href="#" aria-label="LinkedIn">
-                                    <i class="fab fa-linkedin-in"></i>
-                                </a>
+                    <div class="team-item rounded overflow-hidden mb-2">
+                        <div class="team-img position-relative">
+                            <img class="img-fluid" src="{{ teacher.image.url}}" alt="">
+                            <div class="team-social">
+                                <a class="btn btn-outline-light btn-square mx-1" href="#"><i class="fab fa-twitter"></i></a>
+                                <a class="btn btn-outline-light btn-square mx-1" href="#"><i class="fab fa-facebook-f"></i></a>
+                                <a class="btn btn-outline-light btn-square mx-1" href="#"><i class="fab fa-linkedin-in"></i></a>
                             </div>
                         </div>
                         <div class="bg-secondary p-4">
-                            <!-- Link the Name -->
-                            <h5><a href="{% url 'teacher_detail' teacher.id %}">{{ teacher.full_name }}</a></h5>
+                            <h5>{{ teacher.full_name }}</h5>
                             <p class="m-0">{{ teacher.specialization }}</p>
                         </div>
                     </div>
+                </div>
                     </div>
                 {% endfor %}
-            </div>
         </div>
+    </div>
     </div>
     <!-- Team End -->
 
@@ -295,39 +294,30 @@
                 <h1>Latest From Our Blog</h1>
             </div>
             <div class="row pb-3">
-                <div class="col-lg-4 mb-4">
-                    <div class="blog-item position-relative overflow-hidden rounded mb-2">
-                        <img class="img-fluid" src="img/blog-1.jpg" alt="">
-                        <a class="blog-overlay text-decoration-none" href="">
-                            <h5 class="text-white mb-3">Lorem elitr magna stet eirmod labore amet labore clita at ut
-                                clita</h5>
-                            <p class="text-primary m-0">Jan 01, 2050</p>
-                        </a>
+                {% for blog in blogs %}
+                    <div class="col-lg-4 mb-4">
+                        <div class="blog-item position-relative overflow-hidden rounded mb-2">
+                            {% if blog.blogimage_set.exists %}
+                                <img class="img-fluid" src="{{ blog.blogimage_set.first.image.url }}"
+                                     alt="{{ blog.title }}">
+                            {% else %}
+                                <img class="img-fluid" src="{% static 'courses/img/about.jpg' %}"
+                                     alt="Default image">
+                            {% endif %}
+                            <a class="blog-overlay text-decoration-none" href="{% url 'blog-detail' blog.id %}">
+                                <h5 class="text-white mb-3">{{ blog.title }}</h5>
+                                <p class="text-primary m-0">{{ blog.date_added|date:"M d, Y" }}</p>
+                            </a>
+                        </div>
                     </div>
-                </div>
-                <div class="col-lg-4 mb-4">
-                    <div class="blog-item position-relative overflow-hidden rounded mb-2">
-                        <img class="img-fluid" src="img/blog-2.jpg" alt="">
-                        <a class="blog-overlay text-decoration-none" href="">
-                            <h5 class="text-white mb-3">Lorem elitr magna stet eirmod labore amet labore clita at ut
-                                clita</h5>
-                            <p class="text-primary m-0">Jan 01, 2050</p>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-4 mb-4">
-                    <div class="blog-item position-relative overflow-hidden rounded mb-2">
-                        <img class="img-fluid" src="img/blog-3.jpg" alt="">
-                        <a class="blog-overlay text-decoration-none" href="">
-                            <h5 class="text-white mb-3">Lorem elitr magna stet eirmod labore amet labore clita at ut
-                                clita</h5>
-                            <p class="text-primary m-0">Jan 01, 2050</p>
-                        </a>
-                    </div>
-                </div>
+                {% empty %}
+                    <p>No blogs available.</p>
+                {% endfor %}
             </div>
+
         </div>
     </div>
+
     <!-- Blog End -->
 
 
