@@ -96,14 +96,14 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 
 class ContactMessage(models.Model):
-    username = models.CharField(max_length=150)
-    email_from = models.EmailField(null=True, blank=True)
+    name = models.CharField(max_length=150)
+    email = models.EmailField(null=True, blank=True)
     message = models.TextField()
     date_added = models.DateField(auto_now_add=True)
     subject = models.CharField(max_length=300)
 
     def __str__(self):
-        return self.username
+        return self.name
 
 
 class Student(models.Model):

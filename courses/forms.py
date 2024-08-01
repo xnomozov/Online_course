@@ -14,7 +14,7 @@ class CourseCommentForm(forms.ModelForm):
 class ContactMessageForm(forms.ModelForm):
     class Meta:
         model = ContactMessage
-        fields = ['username', 'email_from', 'message', 'subject']
+        fields = ['name', 'email', 'message', 'subject']
 
 
 class LoginForm(forms.Form):
