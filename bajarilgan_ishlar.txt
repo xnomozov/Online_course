@@ -1,0 +1,15 @@
+index(home) page:
+1.categoriyalar chiqarildi,
+2. courselar, o'qituvchilar chiqarildi
+3. Studentlar tomonidan yozilgan so'ngi 3ta komment chiqarildi
+4. Bloglar, footerdayam categoriylar chiqarilib detail pagega url berildi,
+tepadagi sanalganlarni hammasiga detail pagega o'tadigan qilindi
+Course-detailga, ya'ni kursning qolgan videolarini faqat studentlar ya'ni kursni olganlar kiraolishadi,
+login qilgnalr va login qilmaganlar faqat kursning bitta videosini index pageni o'zida ko'rolishadi va video o'zi avtomatik qo'yiladi.
+Student bo'lish uchun pastdagi sign-up formasiga telefon nomer va coursni kiritaladi. va u forma studentlarga ko'rinmaydi,
+Student boshqa attributlarini login qilgan userni attributlarini oladi, va sign up forma login qilmaganlarga ko'rinmaydi.
+Authenticate knopkasi qo'shildi login register qilish mumkin, login yoki register qilgandan keyin u logoutga o'zgaradi,
+
+about pageda:
+
+

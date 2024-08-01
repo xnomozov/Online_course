@@ -25,7 +25,7 @@ class LogoutView(View):
 class LoginView(FormView):
     template_name = 'authentication/login.html'
     form_class = LoginForm
-    success_url = '/index/'  # Replace with appropriate URL after successful login
+    success_url = '/index/'
 
     def form_valid(self, form):
         email = form.cleaned_data['email']
@@ -37,7 +37,7 @@ class LoginView(FormView):
                 user.is_student = True
                 user.save()
             login(self.request, user)
-            messages.success(request, 'You are successfully logged in.')
+            # messages.success(request, 'You are successfully logged in.')
             return super().form_valid(form)
         return super().form_invalid(form)
 
