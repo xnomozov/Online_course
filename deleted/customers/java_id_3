@@ -1,0 +1,11 @@
+{
+    "id": 3,
+    "title": "java",
+    "description": "axsx",
+    "number_of_students": 12,
+    "duration": 12,
+    "teachers": "Vohidjon Boyqo'ziyev",
+    "rating": 1,
+    "image": "images/_ab3a612b-9aaa-4c4c-ae47-eabed4c93c9c.jfif",
+    "category": "Programming"
+}

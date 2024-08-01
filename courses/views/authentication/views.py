@@ -26,7 +26,7 @@ from root.settings import EMAIL_HOST_USER, DEFAULT_FROM_EMAIL
 
 def logout_page(request):
     logout(request)
-    return render(request, 'authentication/logout.html')
+    return render(request, 'courses/index.html')
 
 
 def login_page(request):

@@ -1,0 +1,11 @@
+{
+    "id": 2,
+    "title": "Python for Beginners",
+    "description": "Python for Beginners.",
+    "number_of_students": 123,
+    "duration": 122,
+    "teachers": "Vohidjon Boyqo'ziyev",
+    "rating": 5,
+    "image": "images/FREE-Python-Course-For-Beginners_bHJvI9t.png",
+    "category": "Programming"
+}
