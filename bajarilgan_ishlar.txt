@@ -5,11 +5,41 @@ index(home) page:
 4. Bloglar, footerdayam categoriylar chiqarilib detail pagega url berildi,
 tepadagi sanalganlarni hammasiga detail pagega o'tadigan qilindi
 Course-detailga, ya'ni kursning qolgan videolarini faqat studentlar ya'ni kursni olganlar kiraolishadi,
-login qilgnalr va login qilmaganlar faqat kursning bitta videosini index pageni o'zida ko'rolishadi va video o'zi avtomatik qo'yiladi.
-Student bo'lish uchun pastdagi sign-up formasiga telefon nomer va coursni kiritaladi. va u forma studentlarga ko'rinmaydi,
-Student boshqa attributlarini login qilgan userni attributlarini oladi, va sign up forma login qilmaganlarga ko'rinmaydi.
+login qilgnalr va login qilmaganlar faqat kursning bitta videosini index pageni o'zida ko'rolishadi
+va video o'zi avtomatik qo'yiladi. Student bo'lish uchun pastdagi sign-up formasiga telefon nomer
+va coursni kiritaladi. va u forma studentlarga ko'rinmaydi, Student boshqa attributlarini login qilgan
+userni attributlarini oladi, va sign up forma login qilmaganlarga ko'rinmaydi.
 Authenticate knopkasi qo'shildi login register qilish mumkin, login yoki register qilgandan keyin u logoutga o'zgaradi,
 
 about pageda:
+login qilingandan keyin sign up forma chiqadi, so'ngi studentlar yozgan kommentlar chiqarildi,
+va boshqa kichik ishlar
+
+courses pageda:
+courselar va kategoriyalar chiqarildi, kategoriya detailiga hamma o'tishi mumkin,
+lekin coursega faqat studentlar kiraoladi, va boshqa kichik ishlar.
+
+teachers pageda:
+teachers listi chiqarildi, va hamma uni detailaga o'ta oladi, va boshqa kichik ishlar.
+
+blog pageda:
+bloglar chiqarildi, va categoriyasi bo'yicha ro'yxati chiqarilib, userlar xohlagan
+kategoriyadagi bloglarni filtr qilib kirib o'qa olishadi, ohirgi bloglar listi ham chiqarildi
+blog detailda ham kategoriyalar bo'yicha ro'yhat va ohirgi postlar bor.
+
+contact pageda:
+contact qilish userlar yozgan habarlari bazaga saqlanadigan qilindi.
+
+login register google bo'yicha ham qilinadi, register page recaptcha
+ ya'ni robot yo insonligini aniqlaydigan field qo'yildi va register activation
+ link orqali qilindi
+
+har bir app uchun signallar yozildi, user register ya'ni save qilingandan keyin
+email pochtasiga muvaffaqatli register qilindi degan message jo'natildi. teachers,
+va boshqa modellarni o'chirganda papka yaratilib unga json file ko'rinishida saqlanadigan qilindi.
+
+admin pagega import export qo'shildi, va jazzmin moduli yordamida customize qilindi.
+
+va boshqa yana kichik ishlar.
 
 
