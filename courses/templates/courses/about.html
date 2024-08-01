@@ -44,7 +44,9 @@
 
 
     <!-- Registration Start -->
-    {% if user.is_authenticated %}
+  {% if user.is_student %}
+
+    {% elif user.is_authenticated %}
         <div class="container-fluid bg-registration py-5" style="margin: 90px 0;">
             <div class="container py-5">
                 <div class="row align-items-center">
@@ -76,7 +78,7 @@
                                 <h1 class="m-0">Sign Up Now</h1>
                             </div>
                             <div class="card-body rounded-bottom bg-primary p-5">
-                                <form method="post" action="{% url 'about' %}">
+                                <form method="post" action="{% url 'index' %}">
                                     {% csrf_token %}
                                     {{ form.as_p }}
                                     <div>
@@ -90,9 +92,7 @@
                 </div>
             </div>
         </div>
-    {% elif user.is_student %}
 
-    {% else %}
 
     {% endif %}
 
