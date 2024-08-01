@@ -8,7 +8,7 @@ from courses.models import CourseComment, ContactMessage, User, Student
 class CourseCommentForm(forms.ModelForm):
     class Meta:
         model = CourseComment
-        fields = ['name', 'email', 'comment', 'rating']
+        fields = [ 'comment', 'rating']
 
 
 class ContactMessageForm(forms.ModelForm):
@@ -51,10 +51,8 @@ class RegisterForm(UserCreationForm):
 class StudentForm(forms.ModelForm):
     class Meta:
         model = Student
-        fields = ['name', 'email', 'course', 'password']
+        fields = ['course', 'phone_number']
         widgets = {
-            'name': forms.TextInput(attrs={'placeholder': 'Enter your name'}),
-            'email': forms.EmailInput(attrs={'placeholder': 'Enter your email'}),
-            'phone': forms.TextInput(attrs={'placeholder': 'Enter your phone number'}),
+            'phone_number': forms.TextInput(attrs={'class': 'form-control'}),
             'course': forms.Select(attrs={'class': 'form-control'}),
         }

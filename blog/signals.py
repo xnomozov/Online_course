@@ -14,7 +14,7 @@ def blog_pre_delete(sender, instance, **kwargs):
     if not os.path.exists(directory):
         os.makedirs(directory)
 
-    file_path = os.path.join(directory, f'{instance.full_name}_id_{instance.id}')
+    file_path = os.path.join(directory, f'{instance.title}_id_{instance.id}')
     data = {
         'id': instance.id,
         'title': instance.title,

@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -45,7 +46,8 @@ INSTALLED_APPS = [
     'django_recaptcha',
     'crispy_forms',
     'social_django',
-    'crispy_bootstrap4'
+    'crispy_bootstrap4',
+    'import_export'
 ]
 
 MIDDLEWARE = [
@@ -151,7 +153,7 @@ EMAIL_USE_TLS = 'True'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'jm1495046@gmail.com'
 EMAIL_HOST_PASSWORD = 'srth zwaz emjm aexl'
-DEFAULT_FROM_EMAIL= EMAIL_HOST_USER
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 PASSWORD_RESET_TIMEOUT = 300

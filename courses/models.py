@@ -1,3 +1,5 @@
+from datetime import timezone, datetime
+
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import PermissionsMixin
@@ -65,9 +67,12 @@ class CourseComment(models.Model):
     is_published = models.BooleanField(default=False)
     rating = models.CharField(max_length=100, choices=RatingChoices.choices, default=RatingChoices.Zero.value)
     course_id = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='comments')
+    student = models.ForeignKey('courses.User', on_delete=models.CASCADE, related_name='comments')
+    created_at = models.DateTimeField( default=datetime.now)
 
 
 class User(AbstractBaseUser, PermissionsMixin):
+    is_student = models.BooleanField(default=False)
     email = models.EmailField(unique=True, null=True)
     username = models.CharField(max_length=255, null=True, blank=True)
     birth_of_date = models.DateField(null=True, blank=True)
@@ -107,7 +112,8 @@ class Student(models.Model):
     password = models.CharField(max_length=150)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-
+    phone_number = models.IntegerField()
+    image = models.ImageField()
 
     def __str__(self):
         return self.name

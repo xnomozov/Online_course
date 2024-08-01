@@ -44,8 +44,5 @@ def user_post_save(sender, instance, created, **kwargs):
         message = 'Your account has been added and saved successfully as user. Thank you! '
         email_from = settings.DEFAULT_FROM_EMAIL
         email_to = [instance.email]
-        try:
-            send_mail(subject, message, email_from, email_to, fail_silently=False)
-            print(f'Email sent to {instance.email}')
-        except Exception as e:
-            raise f'Error sending email: {str(e)}'
+
+        send_mail(subject, message, email_from, email_to, fail_silently=False)

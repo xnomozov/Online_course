@@ -1,48 +1,45 @@
-import logging
-
-from django.contrib.auth import logout
 from django.http import request
-from django.shortcuts import render
-from django.contrib.admin import register
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-
-from django.shortcuts import render, redirect
-
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
-
+from django.views import View
 from django.views.generic import FormView, TemplateView
 from django.template.loader import render_to_string
-from django.shortcuts import redirect, get_object_or_404
+from django.shortcuts import redirect, render
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_str
 from django.core.mail import EmailMessage
-
-from courses.forms import ContactMessage, ContactMessageForm, RegisterForm, LoginForm, StudentForm
+from courses.forms import ContactMessageForm, RegisterForm, LoginForm, StudentForm
 from courses.tokens import account_activation_token
-from courses.models import Course, User
-from root.settings import EMAIL_HOST_USER, DEFAULT_FROM_EMAIL
+from courses.models import User, Course, Teacher, Category, Student
+from root.settings import DEFAULT_FROM_EMAIL
 
 
-def logout_page(request):
-    logout(request)
-    return render(request, 'courses/index.html')
+class LogoutView(View):
+    def get(self, request):
+        logout(request)
+        messages.success(request, 'You have been logged out.')
+        return redirect('index')
 
 
-def login_page(request):
-    if request.method == 'POST':
-        form = LoginForm(request.POST)
-        if form.is_valid():
-            email = form.cleaned_data['email']
-            password = form.cleaned_data['password']
-            user = authenticate(request, email=email, password=password)
-            if user:
-                login(request, user, backend='django.contrib.auth.backends.ModelBackend')
-                return redirect('index')
-    else:
-        form = LoginForm()
+class LoginView(FormView):
+    template_name = 'authentication/login.html'
+    form_class = LoginForm
+    success_url = '/index/'  # Replace with appropriate URL after successful login
 
-    return render(request, 'authentication/login.html', {'form': form})
+    def form_valid(self, form):
+        email = form.cleaned_data['email']
+        password = form.cleaned_data['password']
+        user = authenticate(self.request, email=email, password=password)
+
+        if user is not None:
+            if Student.objects.filter(email=email).exists():
+                user.is_student = True
+                user.save()
+            login(self.request, user)
+            messages.success(request, 'You are successfully logged in.')
+            return super().form_valid(form)
+        return super().form_invalid(form)
 
 
 def activate(request, uidb64, token):
@@ -80,21 +77,18 @@ def activate_email(request, user, to_email):
         messages.error(request, f'Sorry, there was an error sending the activation email: {str(e)}')
 
 
-def register_page(request):
-    if request.method == 'POST':
-        form = RegisterForm(request.POST)
-        if form.is_valid():
-            user = form.save(commit=False)
-            user.is_active = False
-            user.save()
-            activate_email(request, user, to_email=form.cleaned_data['email'])
-            return redirect('index')  # Replace with appropriate redirect after registration
-        else:
-            messages.error(request, 'Form is not valid. Please correct the errors.')
-    else:
-        form = RegisterForm()
+class RegisterView(FormView):
+    template_name = 'authentication/register.html'
+    form_class = RegisterForm
+    success_url = '/index/'
 
-    return render(request, 'authentication/register.html', {'form': form})
+    def form_valid(self, form):
+        user = form.save(commit=False)
+        user.is_active = False
+        user.save()
+        activate_email(self.request, user, to_email=form.cleaned_data['email'])
+        messages.success(self.request, 'Registration successful. Please check your email to activate your account.')
+        return super().form_valid(form)
 
 
 class ContactView(TemplateView):
@@ -113,28 +107,6 @@ class ContactView(TemplateView):
             messages.success(request, 'Thank you! Your message has been sent.')
             return redirect('contact')
 
-        context = self.get_context_data(**kwargs)
-        context['form'] = form
-        return self.render_to_response(context)
-
-
-class StudentView(TemplateView):
-    template_name = 'courses/index.html'
-
-    def get_context_data(self, **kwargs):
-        form = StudentForm()
-        context = super().get_context_data(**kwargs)
-        context['form'] = form
-        return context
-
-    def post(self, request, *args, **kwargs):
-        form = StudentForm(request.POST)
-        if form.is_valid():
-            student = form.save(commit=False)
-            student.user = request.user
-            student.save()
-            messages.success(request, 'Thank you! You are welcome to study!')
-            return redirect('index')
         context = self.get_context_data(**kwargs)
         context['form'] = form
         return self.render_to_response(context)
