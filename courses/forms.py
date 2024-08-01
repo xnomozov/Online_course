@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django_recaptcha.fields import ReCaptchaField
 
-from courses.models import CourseComment, ContactMessage, User
+from courses.models import CourseComment, ContactMessage, User, Student
 
 
 class CourseCommentForm(forms.ModelForm):
@@ -14,7 +14,7 @@ class CourseCommentForm(forms.ModelForm):
 class ContactMessageForm(forms.ModelForm):
     class Meta:
         model = ContactMessage
-        fields = ['name', 'email', 'message', 'subject']
+        fields = ['username', 'email_from', 'message', 'subject']
 
 
 class LoginForm(forms.Form):
@@ -46,3 +46,15 @@ class RegisterForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('username', 'email', 'password1', 'password2')
+
+
+class StudentForm(forms.ModelForm):
+    class Meta:
+        model = Student
+        fields = ['name', 'email', 'course', 'password']
+        widgets = {
+            'name': forms.TextInput(attrs={'placeholder': 'Enter your name'}),
+            'email': forms.EmailInput(attrs={'placeholder': 'Enter your email'}),
+            'phone': forms.TextInput(attrs={'placeholder': 'Enter your phone number'}),
+            'course': forms.Select(attrs={'class': 'form-control'}),
+        }

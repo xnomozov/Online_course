@@ -1,5 +1,6 @@
 {% extends 'courses/base.html' %}
 {% load static %}
+{% load crispy_forms_tags %}
 {% block content %}
     <!-- Carousel Start -->
     <div class="container-fluid p-0 pb-5 mb-5">
@@ -115,8 +116,22 @@
                 {% for course in courses %}
                     <div class="col-lg-4 col-md-6 mb-4">
                         <div class="rounded overflow-hidden mb-2">
-                            <img class="img-fluid" src="{{ course.image.url }}" alt="{{ course.title }}"
-                                 style="width: 100%; height: 200px; object-fit: cover;">
+                            {% if user.is_authenticated %}
+                                <a href="{% url 'course_detail' course.id %}">
+                                <video class="img-fluid" controls autoplay muted
+                                       style="width: 100%; height: 200px; object-fit: cover;">
+                                    <source src="{{ course.videos.first.video.url }}" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                            {% else %}
+                                <video class="img-fluid" controls autoplay muted
+                                       style="width: 100%; height: 200px; object-fit: cover;">
+                                    <source src="{{ course.videos.first.video.url }}" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                            {% endif %}
+
+                            </a>
                             <div class="bg-secondary p-4">
                                 <div class="d-flex justify-content-between mb-3">
                                     <small class="m-0"><i
@@ -127,7 +142,14 @@
                                     </small>
                                 </div>
                                 <a class="h5 text-dark"
-                                   href="{% url 'course_detail' course.id %}">{{ course.title }}</a>
+                                        {% if user.is_authenticated %}
+                                   href="{% url 'course_detail' course.id %}"
+                                        {% else %}
+                                   href="#"
+                                        {% endif %}>
+                                    {{ course.title }}
+                                </a>
+
                                 <div class="border-top mt-4 pt-4">
                                     <div class="d-flex justify-content-between">
                                         <h6 class="m-0"><i
@@ -177,33 +199,20 @@
                             <h1 class="m-0">Sign Up Now</h1>
                         </div>
                         <div class="card-body rounded-bottom bg-primary p-5">
-                            <form>
-                                <div class="form-group">
-                                    <input type="text" class="form-control border-0 p-4" placeholder="Your name"
-                                           required="required"/>
-                                </div>
-                                <div class="form-group">
-                                    <input type="email" class="form-control border-0 p-4" placeholder="Your email"
-                                           required="required"/>
-                                </div>
-                                <div class="form-group">
-                                    <select class="custom-select border-0 px-4" style="height: 47px;">
-                                        <option selected>Select a course</option>
-                                        <option value="1">Course 1</option>
-                                        <option value="2">Course 1</option>
-                                        <option value="3">Course 1</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <button class="btn btn-dark btn-block border-0 py-3" type="submit">Sign Up Now
-                                    </button>
-                                </div>
-                            </form>
+                            <form method="post" action="{% url 'student' %}">
+                                {% csrf_token %}
+                                {{ form.as_p }}
+                                
+
+                                <button class="btn btn-dark btn-block border-0 py-3" type="submit">Sign Up Now
+                                </button>
                         </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
     <!-- Registration End -->
 
@@ -218,21 +227,24 @@
             <div class="row">
                 {% for teacher in teachers %}
                     <div class="col-md-6 col-lg-3 text-center team mb-4">
-                    <div class="team-item rounded overflow-hidden mb-2">
-                        <div class="team-img position-relative">
-                            <img class="img-fluid" src="{{ teacher.image.url}}" alt="">
-                            <div class="team-social">
-                                <a class="btn btn-outline-light btn-square mx-1" href="#"><i class="fab fa-twitter"></i></a>
-                                <a class="btn btn-outline-light btn-square mx-1" href="#"><i class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-outline-light btn-square mx-1" href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <div class="team-item rounded overflow-hidden mb-2">
+                            <div class="team-img position-relative">
+                                <img class="img-fluid" src="{{ teacher.image.url }}" alt="">
+                                <div class="team-social">
+                                    <a class="btn btn-outline-light btn-square mx-1" href="#"><i
+                                            class="fab fa-twitter"></i></a>
+                                    <a class="btn btn-outline-light btn-square mx-1" href="#"><i
+                                            class="fab fa-facebook-f"></i></a>
+                                    <a class="btn btn-outline-light btn-square mx-1" href="#"><i
+                                            class="fab fa-linkedin-in"></i></a>
+                                </div>
+                            </div>
+                            <div class="bg-secondary p-4">
+                                <h5>{{ teacher.full_name }}</h5>
+                                <p class="m-0">{{ teacher.specialization }}</p>
                             </div>
                         </div>
-                        <div class="bg-secondary p-4">
-                            <h5>{{ teacher.full_name }}</h5>
-                            <p class="m-0">{{ teacher.specialization }}</p>
-                        </div>
                     </div>
-                </div>
                     </div>
                 {% endfor %}
         </div>

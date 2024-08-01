@@ -25,7 +25,18 @@
     <!-- Customized Bootstrap Stylesheet -->
     <link href="{% static 'courses/css/style.css' %}" rel="stylesheet">
 </head>
-
+ {% if messages %}
+                    <div class="row">
+                        <div class="col-12">
+                            {% for message in messages %}
+                                <div class="alert fa-align-center {% if message.tags %}alert-{{ message.tags }}{% endif %}"
+                                     role="alert">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
 <body>
 <!-- Topbar Start-->
 <v></v>

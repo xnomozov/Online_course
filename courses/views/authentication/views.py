@@ -6,12 +6,11 @@ from django.shortcuts import render
 from django.contrib.admin import register
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from django.contrib.auth.tokens import default_token_generator
-from django.core.mail import send_mail
+
 from django.shortcuts import render, redirect
-from django.urls import reverse_lazy
+
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
-from django.views import View
+
 from django.views.generic import FormView, TemplateView
 from django.template.loader import render_to_string
 from django.shortcuts import redirect, get_object_or_404
@@ -19,7 +18,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_str
 from django.core.mail import EmailMessage
 
-from courses.forms import ContactMessage, ContactMessageForm, RegisterForm, LoginForm
+from courses.forms import ContactMessage, ContactMessageForm, RegisterForm, LoginForm, StudentForm
 from courses.tokens import account_activation_token
 from courses.models import Course, User
 from root.settings import EMAIL_HOST_USER, DEFAULT_FROM_EMAIL
@@ -73,7 +72,7 @@ def activate_email(request, user, to_email):
         'protocol': 'https' if request.is_secure() else 'http',
         'token': account_activation_token.make_token(user),
     })
-    email = EmailMessage(subject, message, from_email=DEFAULT_FROM_EMAIL, to=[to_email,])
+    email = EmailMessage(subject, message, from_email=DEFAULT_FROM_EMAIL, to=[to_email, ])
     try:
         email.send()
         messages.success(request, 'Activation email has been sent. Please check your email.')
@@ -114,6 +113,28 @@ class ContactView(TemplateView):
             messages.success(request, 'Thank you! Your message has been sent.')
             return redirect('contact')
 
+        context = self.get_context_data(**kwargs)
+        context['form'] = form
+        return self.render_to_response(context)
+
+
+class StudentView(TemplateView):
+    template_name = 'courses/index.html'
+
+    def get_context_data(self, **kwargs):
+        form = StudentForm()
+        context = super().get_context_data(**kwargs)
+        context['form'] = form
+        return context
+
+    def post(self, request, *args, **kwargs):
+        form = StudentForm(request.POST)
+        if form.is_valid():
+            student = form.save(commit=False)
+            student.user = request.user
+            student.save()
+            messages.success(request, 'Thank you! You are welcome to study!')
+            return redirect('index')
         context = self.get_context_data(**kwargs)
         context['form'] = form
         return self.render_to_response(context)

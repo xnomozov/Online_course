@@ -14,4 +14,6 @@ urlpatterns = [
     path('login/', auth_views.login_page, name='login'),
     path('logout/', auth_views.logout_page, name='logout'),
     path('register/', auth_views.register_page, name='register'),
-    path('activate/<uidb64>/<token>/', auth_views.activate, name='activate')]
+    path('student/', auth_views.StudentView.as_view(), name='student'),
+    path('activate/<uidb64>/<token>/', auth_views.activate, name='activate'),
+]

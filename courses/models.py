@@ -91,11 +91,23 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 
 class ContactMessage(models.Model):
-    name = models.CharField(max_length=150)
-    email = models.EmailField(null=True, blank=True)
+    username = models.CharField(max_length=150)
+    email_from = models.EmailField(null=True, blank=True)
     message = models.TextField()
     date_added = models.DateField(auto_now_add=True)
     subject = models.CharField(max_length=300)
+
+    def __str__(self):
+        return self.username
+
+
+class Student(models.Model):
+    name = models.CharField(max_length=150)
+    email = models.EmailField()
+    password = models.CharField(max_length=150)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
 
     def __str__(self):
         return self.name
