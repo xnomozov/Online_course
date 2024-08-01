@@ -67,9 +67,6 @@ class CourseComment(models.Model):
     course_id = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='comments')
 
 
-
-
-
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True, null=True)
     username = models.CharField(max_length=255, null=True, blank=True)
@@ -91,3 +88,14 @@ class User(AbstractBaseUser, PermissionsMixin):
             self.password = make_password(self.password)
 
         super().save(*args, **kwargs)
+
+
+class ContactMessage(models.Model):
+    name = models.CharField(max_length=150)
+    email = models.EmailField(null=True, blank=True)
+    message = models.TextField()
+    date_added = models.DateField(auto_now_add=True)
+    subject = models.CharField(max_length=300)
+
+    def __str__(self):
+        return self.name

@@ -41,7 +41,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'teachers',
     'blog',
-    'courses'
+    'courses',
+    'django_recaptcha',
+    'crispy_forms',
+    'social_django',
+    'crispy_bootstrap4'
 ]
 
 MIDDLEWARE = [
@@ -147,3 +151,15 @@ EMAIL_USE_TLS = 'True'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'jm1495046@gmail.com'
 EMAIL_HOST_PASSWORD = 'srth zwaz emjm aexl'
+DEFAULT_FROM_EMAIL= EMAIL_HOST_USER
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+PASSWORD_RESET_TIMEOUT = 300
+RECAPTCHA_PUBLIC_KEY = ' 6LchaBMqAAAAACW2565N_AOLhWnwyMRaPpBiOjnB'
+RECAPTCHA_PRIVATE_KEY = '6LchaBMqAAAAAH8G-7yijFEXpus_9Bs6HPSEoalR'
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'social_core.backends.google.GoogleOAuth2', ]
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = env('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = env('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
